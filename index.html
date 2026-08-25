@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cauã Cozzarin — Desenvolvedor Júnior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0F1620;
+    --bg-alt: #0B1119;
+    --surface: #161F2C;
+    --surface-2: #1C2734;
+    --border: #29394B;
+    --text: #EDEAE3;
+    --text-muted: #8B93A1;
+    --amber: #E8A33D;
+    --amber-dim: #C98A2E;
+    --teal: #4FD1AE;
+    --danger: #E0665E;
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+    --sans: 'Inter', -apple-system, sans-serif;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(232,163,61,0.07), transparent 40%),
+      radial-gradient(circle at 85% 20%, rgba(79,209,174,0.06), transparent 45%);
+    background-attachment: fixed;
+  }
+
+  a{ color: inherit; text-decoration:none; }
+
+  :focus-visible{
+    outline: 2px solid var(--teal);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection{ background: var(--amber); color: #0F1620; }
+
+  .wrap{
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- NAV ---------- */
+  header.site{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(15,22,32,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .nav .logo{
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--amber);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .nav .logo .dot{
+    width:8px; height:8px; border-radius:50%;
+    background: var(--teal);
+    box-shadow: 0 0 8px var(--teal);
+  }
+  .nav ul{
+    list-style:none;
+    display:flex;
+    gap: 24px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .nav ul a:hover{ color: var(--text); }
+  .nav ul li::before{ content: none; }
+
+  @media (max-width: 620px){
+    .nav ul{ display:none; }
+  }
+
+  /* ---------- HERO / TERMINAL ---------- */
+  .hero{
+    padding: 72px 0 56px;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  h1.name{
+    font-family: var(--mono);
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    color: var(--text);
+  }
+  .role{
+    font-size: 18px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    max-width: 60ch;
+  }
+  .role strong{ color: var(--amber); font-weight: 600; }
+
+  .contact-row{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .chip{
+    font-family: var(--mono);
+    font-size: 12.5px;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text-muted);
+    display:flex;
+    align-items:center;
+    gap: 7px;
+    transition: border-color .15s ease, color .15s ease, transform .15s ease;
+  }
+  .chip:hover{
+    border-color: var(--amber-dim);
+    color: var(--text);
+    transform: translateY(-1px);
+  }
+  .chip svg{ width:14px; height:14px; flex-shrink:0; }
+
+  /* terminal panel */
+  .terminal{
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px -20px rgba(0,0,0,0.6);
+  }
+  .terminal-bar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding: 10px 14px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .terminal-bar .tdot{ width:10px; height:10px; border-radius:50%; }
+  .terminal-bar .tdot:nth-child(1){ background:#E0665E; }
+  .terminal-bar .tdot:nth-child(2){ background:#E8A33D; }
+  .terminal-bar .tdot:nth-child(3){ background:#4FD1AE; }
+  .terminal-bar .tpath{
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin-left: 8px;
+  }
+  .terminal-body{
+    padding: 20px 22px 24px;
+    font-family: var(--mono);
+    font-size: 13.5px;
+    min-height: 168px;
+  }
+  .terminal-body .line{ margin-bottom: 8px; }
+  .terminal-body .prompt{ color: var(--teal); }
+  .terminal-body .out{ color: var(--text-muted); padding-left: 18px; }
+  .terminal-body .out strong{ color: var(--text); font-weight: 600; }
+  .caret{
+    display:inline-block;
+    width: 8px; height: 15px;
+    background: var(--amber);
+    margin-left: 3px;
+    vertical-align: text-bottom;
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+  @media (prefers-reduced-motion: reduce){
+    .caret{ animation:none; }
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section{ padding: 56px 0; border-top: 1px solid var(--border); }
+  .sec-head{
+    display:flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .sec-tag{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  h2{
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    display:flex;
+    align-items:center;
+    gap: 10px;
+  }
+  h2::before{
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--amber);
+  }
+
+  p.lede{
+    color: var(--text-muted);
+    max-width: 68ch;
+    font-size: 15.5px;
+  }
+
+  /* ---------- EXPERIENCE / LOG ---------- */
+  .log{
+    border-left: 1px solid var(--border);
+    margin-left: 6px;
+  }
+  .log-entry{
+    position: relative;
+    padding: 4px 0 28px 26px;
+  }
+  .log-entry:last-child{ padding-bottom: 0; }
+  .log-entry::before{
+    content: '';
+    position: absolute;
+    left: -5px; top: 6px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--amber);
+  }
+  .log-entry.active::before{
+    border-color: var(--teal);
+    box-shadow: 0 0 0 4px rgba(79,209,174,0.15);
+  }
+  .log-meta{
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .status-pill{
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+  }
+  .status-pill.online{ color: var(--teal); border-color: rgba(79,209,174,0.4); }
+  .status-pill.archived{ color: var(--text-muted); }
+  .log-role{ font-size: 16px; font-weight: 600; color: var(--text); }
+  .log-role span{ color: var(--amber); font-weight: 500; }
+  .log-desc{ color: var(--text-muted); font-size: 14.5px; margin-top: 6px; max-width: 62ch; }
+
+  /* ---------- PROJECTS ---------- */
+  .projects{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+  }
+  .proj-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    display:flex;
+    flex-direction:column;
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .proj-card:hover{ border-color: var(--amber-dim); transform: translateY(-3px); }
+  .proj-head{
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--text-muted);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-2);
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+  }
+  .proj-body{ padding: 16px; flex:1; display:flex; flex-direction:column; }
+  .proj-title{ font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .proj-desc{ font-size: 14px; color: var(--text-muted); flex:1; }
+  .proj-stack{
+    display:flex; flex-wrap:wrap; gap:6px;
+    margin-top: 14px;
+  }
+  .tag{
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--teal);
+    background: rgba(79,209,174,0.08);
+    border: 1px solid rgba(79,209,174,0.25);
+    padding: 3px 7px;
+    border-radius: 4px;
+  }
+  .proj-link{
+    margin-top: 16px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--amber);
+    display:flex;
+    align-items:center;
+    gap: 6px;
+  }
+  .proj-card:hover .proj-link{ color: var(--text); }
+
+  /* ---------- SKILLS / manifest ---------- */
+  .manifest{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 26px;
+  }
+  .manifest-group{ margin-bottom: 20px; }
+  .manifest-group:last-child{ margin-bottom: 0; }
+  .manifest-key{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .pill-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .pill{
+    font-family: var(--mono);
+    font-size: 12.5px;
+    padding: 6px 11px;
+    border-radius: 6px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  /* ---------- education / languages ---------- */
+  .two-col{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 620px){ .two-col{ grid-template-columns: 1fr; } }
+  .info-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .info-card .k{ font-family: var(--mono); font-size: 11px; color: var(--text-muted); margin-bottom: 8px; text-transform:uppercase; letter-spacing:.05em; }
+  .info-card .v{ font-size: 15px; font-weight: 600; }
+  .info-card .v2{ font-size: 13.5px; color: var(--text-muted); margin-top: 4px; }
+
+  /* ---------- footer ---------- */
+  footer{
+    padding: 48px 0 60px;
+    border-top: 1px solid var(--border);
+    text-align:center;
+  }
+  footer .prompt-line{
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+  }
+  footer .prompt-line strong{ color: var(--teal); }
+  footer .cta{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family: var(--mono);
+    font-size: 14px;
+    padding: 12px 20px;
+    background: var(--amber);
+    color: #0F1620;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: filter .15s ease, transform .15s ease;
+  }
+  footer .cta:hover{ filter: brightness(1.08); transform: translateY(-2px); }
+  footer .foot-links{
+    margin-top: 24px;
+    display:flex;
+    justify-content:center;
+    gap: 18px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+  footer .foot-links a:hover{ color: var(--text); }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="nav">
+    <div class="logo"><span class="dot"></span>cauã.dev</div>
+    <ul>
+      <li><a href="#experiencia">experiência</a></li>
+      <li><a href="#projetos">projetos</a></li>
+      <li><a href="#stack">stack</a></li>
+      <li><a href="#contato">contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">/ desenvolvedor backend &amp; automação</div>
+        <h1 class="name">Cauã Cozzarin</h1>
+        <p class="role">Estudante de Engenharia de Software construindo backends, automações e integrações entre sistemas — de scripts <strong>RPA</strong> em produção a um SaaS de diário de obra em <strong>Next.js</strong> e <strong>PostgreSQL</strong>.</p>
+        <div class="contact-row">
+          <a class="chip" href="mailto:cauacozz@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><path d="M3 5h18v14H3z"/><path d="m3 6 9 7 9-7"/></svg>
+            cauacozz@gmail.com
+          </a>
+          <a class="chip" href="tel:+5547999343288">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg>
+            (47) 99934-3288
+          </a>
+          <a class="chip" href="https://linkedin.com/in/caua-cozzarin" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/><path d="M10 9h4v2a4 4 0 0 1 4-2c3 0 4 2 4 5v7h-4v-6c0-1.5-.5-2.5-2-2.5s-2 1-2 2.5v6h-4z"/></svg>
+            linkedin.com/in/caua-cozzarin
+          </a>
+          <a class="chip" href="https://github.com/cauacozz11" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+            github.com/cauacozz11
+          </a>
+        </div>
+      </div>
+
+      <div class="terminal" role="img" aria-label="Terminal exibindo o status de disponibilidade e stack de Cauã Cozzarin">
+        <div class="terminal-bar">
+          <span class="tdot"></span><span class="tdot"></span><span class="tdot"></span>
+          <span class="tpath">~/cauacozz — zsh</span>
+        </div>
+        <div class="terminal-body">
+          <div class="line"><span class="prompt">$</span> whoami</div>
+          <div class="line out">&gt; <strong>Cauã Cozzarin</strong> — Desenvolvedor Júnior @ Simplifica+</div>
+          <div class="line"><span class="prompt">$</span> status --disponibilidade</div>
+          <div class="line out">&gt; <strong style="color:var(--teal)">online</strong> · aberto a novas oportunidades</div>
+          <div class="line"><span class="prompt">$</span> cat stack.json</div>
+          <div class="line out">&gt; Node.js · TypeScript · React · Next.js · Python · C#</div>
+          <div class="line"><span class="prompt">$</span> curl -H "Authorization: Bearer $TOKEN"</div>
+          <div class="line out">&gt; <strong style="color:var(--amber)">200 OK</strong> — JWT válido, acesso autorizado<span class="caret"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experiencia">
+    <div class="sec-head">
+      <h2>experiência profissional</h2>
+      <span class="sec-tag">career.log</span>
+    </div>
+    <div class="log">
+      <div class="log-entry active">
+        <div class="log-meta">2026-05 → atual <span class="status-pill online">online</span></div>
+        <div class="log-role">Desenvolvedor Júnior <span>@ Simplifica+</span></div>
+        <div class="log-desc">Evolução do estágio em RPA para desenvolvimento júnior, ampliando o escopo de backend, integrações e arquitetura de dados.</div>
+      </div>
+      <div class="log-entry">
+        <div class="log-meta">2025-07 → 2026-04 <span class="status-pill archived">arquivado</span></div>
+        <div class="log-role">Estagiário Desenvolvedor RPA <span>@ Simplifica+</span></div>
+        <div class="log-desc">Automação de tarefas web recorrentes — como geração de boletos — substituindo processos manuais. Scripts de limpeza e padronização de dados vindos de APIs externas. Uso de AWS (S3 e logs) no apoio a fluxos automatizados e análise de execuções. Mapeamento, documentação e testes de processos de negócio, com foco em identificar oportunidades de otimização.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projetos">
+    <div class="sec-head">
+      <h2>projetos</h2>
+      <span class="sec-tag">~/repos</span>
+    </div>
+    <div class="projects">
+
+      <div class="proj-card">
+        <div class="proj-head"><span>diario_de_obra</span><span>public</span></div>
+        <div class="proj-body">
+          <div class="proj-title">SaaS · Diário de Obra</div>
+          <div class="proj-desc">Sistema de diário de obra para construtoras, com registros por texto, imagem e áudio, e geração automática de relatórios em PDF.</div>
+          <div class="proj-stack">
+            <span class="tag">Next.js</span><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">PostgreSQL</span>
+          </div>
+          <a class="proj-link" href="https://github.com/cauacozz11/projeto_diario_de_obra" target="_blank" rel="noopener">
+            ver repositório →
+          </a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span>dashboard_python</span><span>public</span></div>
+        <div class="proj-body">
+          <div class="proj-title">Dashboard em Python</div>
+          <div class="proj-desc">Dashboard interativa para análise e visualização de dados, construída em Python.</div>
+          <div class="proj-stack">
+            <span class="tag">Python</span><span class="tag">Dados</span>
+          </div>
+          <a class="proj-link" href="https://github.com/cauacozz11/Dashbord_Interativa_Python" target="_blank" rel="noopener">
+            ver repositório →
+          </a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span>api_clinica</span><span>public</span></div>
+        <div class="proj-body">
+          <div class="proj-title">API Clínica</div>
+          <div class="proj-desc">API REST para gerenciamento de clínicas médicas, com foco em modelagem de dados e regras de negócio. Atualizada com autenticação via <strong style="color:var(--text)">JWT</strong>, controle de acesso por token e proteção de rotas.</div>
+          <div class="proj-stack">
+            <span class="tag">C#</span><span class="tag">API REST</span><span class="tag">JWT</span><span class="tag">Auth</span>
+          </div>
+          <a class="proj-link" href="https://github.com/cauacozz11/ApiClinica_csharp" target="_blank" rel="noopener">
+            ver repositório →
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="sec-head">
+      <h2>stack &amp; ferramentas</h2>
+      <span class="sec-tag">package.json</span>
+    </div>
+    <div class="manifest">
+      <div class="manifest-group">
+        <div class="manifest-key">"linguagens"</div>
+        <div class="pill-row">
+          <span class="pill">JavaScript</span><span class="pill">TypeScript</span><span class="pill">Python</span><span class="pill">C#</span>
+        </div>
+      </div>
+      <div class="manifest-group">
+        <div class="manifest-key">"backend_e_dados"</div>
+        <div class="pill-row">
+          <span class="pill">Node.js</span><span class="pill">APIs REST</span><span class="pill">SQL</span><span class="pill">NoSQL</span><span class="pill">Tratamento de dados</span><span class="pill">Análise de logs</span><span class="pill">Estruturas de dados</span>
+        </div>
+      </div>
+      <div class="manifest-group">
+        <div class="manifest-key">"autenticação_e_autorização"</div>
+        <div class="pill-row">
+          <span class="pill">JWT</span><span class="pill">Autorização por token</span><span class="pill">Controle de acesso</span><span class="pill">Proteção de rotas</span>
+        </div>
+      </div>
+      <div class="manifest-group">
+        <div class="manifest-key">"frontend"</div>
+        <div class="pill-row">
+          <span class="pill">React</span><span class="pill">Next.js</span>
+        </div>
+      </div>
+      <div class="manifest-group">
+        <div class="manifest-key">"automação"</div>
+        <div class="pill-row">
+          <span class="pill">Puppeteer</span><span class="pill">RPA</span>
+        </div>
+      </div>
+      <div class="manifest-group">
+        <div class="manifest-key">"ferramentas"</div>
+        <div class="pill-row">
+          <span class="pill">Git / GitHub</span><span class="pill">Docker</span><span class="pill">AWS (S3, logs)</span><span class="pill">Insomnia</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="formacao">
+    <div class="sec-head">
+      <h2>formação &amp; idiomas</h2>
+      <span class="sec-tag">profile.env</span>
+    </div>
+    <div class="two-col">
+      <div class="info-card">
+        <div class="k">formação acadêmica</div>
+        <div class="v">Bacharelado em Engenharia de Software</div>
+        <div class="v2">Católica de Santa Catarina — Jaraguá do Sul, SC</div>
+        <div class="v2">02/2025 — atual</div>
+      </div>
+      <div class="info-card">
+        <div class="k">idiomas</div>
+        <div class="v">Português — Nativo</div>
+        <div class="v2">Inglês — Intermediário (leitura técnica e documentação)</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contato">
+  <div class="wrap">
+    <div class="prompt-line"><strong>$</strong> vamos conversar sobre a próxima automação, API ou sistema?</div>
+    <a class="cta" href="mailto:cauacozz@gmail.com">enviar e-mail →</a>
+    <div class="foot-links">
+      <a href="https://github.com/cauacozz11" target="_blank" rel="noopener">github</a>
+      <a href="https://linkedin.com/in/caua-cozzarin" target="_blank" rel="noopener">linkedin</a>
+      <a href="tel:+5547999343288">(47) 99934-3288</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
